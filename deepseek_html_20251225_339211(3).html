@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دستیار مبلغ | دسترسی آسان به محتوای تبلیغی</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* فونت کلمه از گوگل فونت */
+        @import url('https://fonts.googleapis.com/css2?family=Kalameh:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kalameh', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #0ea5e9; /* آب لاجوردی */
+            --secondary-color: #2dd4bf; /* فیروزه‌ای */
+            --dark-color: #0f766e;
+            --light-color: #f0fdfa;
+            --text-color: #334155;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(14, 165, 233, 0.2);
+            --golden-color: #f59e0b;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: radial-gradient(var(--light-color) 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+        
+        /* نوار ناوبری */
+        .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-item a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item a:hover, .nav-item a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* هدر صفحه */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* محتوای اصلی */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        /* بخش ویژه: امشب چی بگم؟ */
+        .tonight-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            border: 1px solid var(--golden-color);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tonight-section:before {
+            content: '⭐';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -50px;
+            left: -50px;
+            transform: rotate(-30deg);
+        }
+        
+        .tonight-title {
+            text-align: center;
+            color: #92400e;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .tonight-subtitle {
+            text-align: center;
+            color: #92400e;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        
+        /* مراحل انتخاب */
+        .tonight-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tonight-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: var(--golden-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .step-title {
+            color: var(--dark-color);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .step-option {
+            padding: 0.8rem 1rem;
+            background: var(--light-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .step-option:hover, .step-option.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* خروجی پیشنهاد */
+        .tonight-output {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .output-title {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+        }
+        
+        .output-tags {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .output-tag {
+            background: var(--light-color);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .output-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .output-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .output-box {
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-color);
+        }
+        
+        .output-box h4 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .tonight-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(14, 165, 233, 0.3);
+        }
+        
+        /* بخش فیش منبر نمونه */
+        .sermon-sample {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        
+        .sermon-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .sermon-title {
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .sermon-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .sermon-content {
+            line-height: 1.8;
+        }
+        
+        .sermon-part {
+            margin-bottom: 2.5rem;
+        }
+        
+        .part-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+        
+        .keyword {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .note-box {
+            background: #f0fdfa;
+            border-right: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .sermon-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        /* بخش ساختار وردپرس */
+        .wordpress-structure {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .structure-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .structure-box {
+            background: var(--light-color);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        
+        .structure-title {
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .structure-list {
+            list-style: none;
+        }
+        
+        .structure-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        
+        .structure-list li:before {
+            content: '✓';
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .plugin-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(14, 165, 233, 0.1);
+        }
+        
+        .plugin-name {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* فوتر */
+        .footer {
+            background: linear-gradient(to right, var(--dark-color), #0e7490);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .footer-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-tagline {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            font-weight: 600;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        /* بخش دسته‌بندی‌ها */
+        .categories-section {
+            margin: 4rem 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* تبلیغ افزونه‌ها */
+        .plugin-promo {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .plugin-promo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- نوار ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="bi bi-journal-bookmark-fill"></i>
+                <span class="logo-text">دستیار مبلغ</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="active">صفحه اصلی</a></li>
+                <li class="nav-item"><a href="#sermons">فیش منبر</a></li>
+                <li class="nav-item"><a href="#tonight">امشب چی بگم؟</a></li>
+                <li class="nav-item"><a href="#wordpress">ساختار وردپرس</a></li>
+                <li class="nav-item"><a href="#categories">دسته‌بندی‌ها</a></li>
+                <li class="nav-item"><a href="#about">درباره ما</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- هدر صفحه -->
+    <header class="header">
+        <h1>دستیار مبلغ</h1>
+        <p>دستیار هوشمند مبلغین برای دسترسی سریع و آسان به فیش منبر و محتوای تبلیغی آماده در حوزه‌های مختلف</p>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <main class="container">
+        <!-- بخش ویژه: امشب چی بگم؟ -->
+        <section id="tonight" class="tonight-section">
+            <h2 class="tonight-title">امشب چی بگم؟ ⭐</h2>
+            <p class="tonight-subtitle">فقط ۳ انتخاب کن و یک منبر کامل دریافت کن</p>
+            
+            <div class="tonight-steps">
+                <!-- مرحله ۱: مخاطب -->
+                <div class="step-card">
+                    <div class="step-number">۱</div>
+                    <h3 class="step-title">مخاطب</h3>
+                    <div class="step-options">
+                        <div class="step-option" data-step="audience" data-value="child">کودک</div>
+                        <div class="step-option" data-step="audience" data-value="teen">نوجوان</div>
+                        <div class="step-option" data-step="audience" data-value="family">خانواده</div>
+                        <div class="step-option" data-step="audience" data-value="general">عمومی</div>
+                    </div>
+                </div>
+                
+                <!-- مرحله ۲: زمان -->
+                <div class="step-card">
+                    <div class="step-number">۲</div>
+                    <h3 class="step-title">زمان</h3>
+                    <div class="step-options">
+                        <div class="step-option" data-step="time" data-value="5">۵ دقیقه</div>
+                        <div class="step-option" data-step="time" data-value="10">۱۰ دقیقه</div>
+                        <div class="step-option" data-step="time" data-value="20">۲۰ دقیقه</div>
+                    </div>
+                </div>
+                
+                <!-- مرحله ۳: موقعیت -->
+                <div class="step-card">
+                    <div class="step-number">۳</div>
+                    <h3 class="step-title">موقعیت</h3>
+                    <div class="step-options">
+                        <div class="step-option" data-step="place" data-value="heyat">هیئت</div>
+                        <div class="step-option" data-step="place" data-value="mosque">مسجد</div>
+                        <div class="step-option" data-step="place" data-value="school">مدرسه</div>
+                        <div class="step-option" data-step="place" data-value="ektefaf">اعتکاف</div>
+                        <div class="step-option" data-step="place" data-value="family">جلسه خانوادگی</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- خروجی پیشنهاد -->
+            <div id="tonight-output" class="tonight-output">
+                <div class="output-header">
+                    <h3 class="output-title">پیشنهاد ویژه برای شما</h3>
+                    <div class="output-tags">
+                        <span id="output-audience" class="output-tag">عمومی</span>
+                        <span id="output-time" class="output-tag">۱۰ دقیقه</span>
+                        <span id="output-place" class="output-tag">مسجد</span>
+                    </div>
+                </div>
+                
+                <div class="output-content">
+                    <div class="output-box">
+                        <h4>عنوان پیشنهادی منبر</h4>
+                        <p id="output-title">خدا حوصله‌ات را دارد</p>
+                    </div>
+                    
+                    <div class="output-box">
+                        <h4>ایده محوری</h4>
+                        <p id="output-idea">خدا از سوال‌های نوجوان نمی‌ترسد، بلکه از بی‌سوالی می‌ترسد</p>
+                    </div>
+                    
+                    <div class="output-box">
+                        <h4>۳ نکته کلیدی</h4>
+                        <ul id="output-points">
+                            <li>سوال داشتن، بی‌دینی نیست</li>
+                            <li>خدا اهل گفت‌وگوست</li>
+                            <li>هیئت جای امن پرسیدن است</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="output-box">
+                        <h4>جمع‌بندی احساسی</h4>
+                        <p id="output-conclusion">خدا تو را با تردیدهایت دوست دارد، نه اینکه بخواهد آنها را نادیده بگیری</p>
+                    </div>
+                </div>
+                
+                <div class="tonight-actions">
+                    <button id="download-sermon" class="btn-primary">
+                        <i class="bi bi-download"></i>
+                        دانلود فیش کامل منبر
+                    </button>
+                </div>
+            </div>
+            
+            <div class="tonight-actions">
+                <button id="generate-sermon" class="btn-primary">
+                    <i class="bi bi-magic"></i>
+                    تولید پیشنهاد منبر
+                </button>
+            </div>
+        </section>
+        
+        <!-- فیش منبر نمونه -->
+        <section id="sermons" class="sermon-sample">
+            <div class="sermon-header">
+                <h2 class="sermon-title">خسته‌ام از خوب نبودنم</h2>
+                <p>فیش منبر کامل (آماده Word – قابل اجرا)</p>
+                
+                <div class="sermon-meta">
+                    <div class="meta-item">
+                        <i class="bi bi-people"></i>
+                        <span>مخاطب: عمومی (قابل استفاده برای هیئت، مسجد، جلسه خانوادگی)</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="bi bi-clock"></i>
+                        <span>زمان: ۱۰ تا ۱۲ دقیقه</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="bi bi-lightbulb"></i>
+                        <span>ایده محوری: خدا با آدم‌های خسته شروع می‌کند، نه با آدم‌های کامل</span>
+                    </div>
+                </div>
+                
+                <div class="keywords">
+                    <span class="keyword">خستگی معنوی</span>
+                    <span class="keyword">رحمت الهی</span>
+                    <span class="keyword">توبه</span>
+                    <span class="keyword">امید</span>
+                    <span class="keyword">بازگشت</span>
+                </div>
+            </div>
+            
+            <div class="sermon-content">
+                <!-- شروع منبر -->
+                <div class="sermon-part">
+                    <h3 class="part-title">شروع منبر (قلاب ذهنی)</h3>
+                    <p>تا حالا شده بگی:<br>
+                    «دیگه خسته شدم… از قول دادن، از خراب کردن، از دوباره زمین خوردن»</p>
+                    
+                    <div class="note-box">
+                        <p>اگر این حس رو داشتی،<br>
+                        بدون این حس، نقطه شروع خدا با توست.</p>
+                    </div>
+                </div>
+                
+                <!-- بدنه منبر -->
+                <div class="sermon-part">
+                    <h3 class="part-title">بدنه منبر (نکته‌محور)</h3>
+                    
+                    <div class="note-box">
+                        <h4>نکته اول | مشکل ما بد بودن نیست، ناامید شدنه</h4>
+                        <p>خیلی‌ها فکر می‌کنن خدا با خوب‌ها کار داره<br>
+                        در حالی که قرآن می‌گه:<br>
+                        <strong>«لا تقنطوا من رحمة الله»</strong><br>
+                        یعنی اگر هنوز ناامیدی، یعنی هنوز راه هست.</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>نکته دوم | خدا دنبال بهانه برای بخششه</h4>
+                        <p>ما دنبال دلیل برای کنار کشیدنیم<br>
+                        خدا دنبال بهانه برای بغل کردن</p>
+                        <p>یک «آه» صادقانه<br>
+                        از هزار تا عمل بی‌دل قوی‌تره</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>نکته سوم | زمین خوردن پایان راه نیست</h4>
+                        <p>امام علی (ع):<br>
+                        <strong>بهترین بندگان کسانی‌اند که بعد از خطا، برمی‌گردند</strong></p>
+                        <p>نه کسانی که خطا ندارند<br>
+                        (چون چنین کسی اصلاً نیست)</p>
+                    </div>
+                </div>
+                
+                <!-- جمع‌بندی -->
+                <div class="sermon-part">
+                    <h3 class="part-title">جمع‌بندی احساسی</h3>
+                    <p>اگر امشب فقط یک جمله با خودت ببری کافیه:<br>
+                    <strong>خدا هنوز از من ناامید نشده</strong></p>
+                    
+                    <div class="note-box">
+                        <p>و اگر او ناامید نشده<br>
+                        من چرا بشم؟</p>
+                    </div>
+                </div>
+                
+                <!-- پیشنهاد عملی -->
+                <div class="sermon-part">
+                    <h3 class="part-title">پیشنهاد عملی</h3>
+                    <div class="note-box">
+                        <p>امشب، نه قول بزرگ بده<br>
+                        فقط بگو:<br>
+                        <strong>«خدایا، فردا رو با تو شروع می‌کنم»</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sermon-actions">
+                <button class="btn-primary">
+                    <i class="bi bi-file-word"></i>
+                    دانلود نسخه Word
+                </button>
+                <button class="btn-primary">
+                    <i class="bi bi-printer"></i>
+                    چاپ فیش منبر
+                </button>
+                <button class="btn-primary">
+                    <i class="bi bi-share"></i>
+                    اشتراک با دیگر مبلغین
+                </button>
+            </div>
+        </section>
+        
+        <!-- ساختار وردپرس -->
+        <section id="wordpress" class="wordpress-structure">
+            <h2 class="section-title">ساختار کامل وردپرس سایت «دستیار مبلغ»</h2>
+            
+            <div class="structure-grid">
+                <!-- منوی اصلی -->
+                <div class="structure-box">
+                    <h3 class="structure-title">الف) دسته‌بندی اصلی (منوی بالا)</h3>
+                    <ul class="structure-list">
+                        <li>صفحه اصلی</li>
+                        <li>فیش منبر</li>
+                        <li>منبر کودک</li>
+                        <li>منبر نوجوان</li>
+                        <li>خانواده</li>
+                        <li>اهل‌بیت (ع)</li>
+                        <li>مناسبت‌ها</li>
+                        <li>امشب چی بگم؟</li>
+                        <li>درباره ما</li>
+                    </ul>
+                </div>
+                
+                <!-- دسته‌بندی محتوایی -->
+                <div class="structure-box">
+                    <h3 class="structure-title">ب) دسته‌بندی محتوایی (Taxonomy)</h3>
+                    <h4>۱. بر اساس مخاطب</h4>
+                    <ul class="structure-list">
+                        <li>کودک</li>
+                        <li>نوجوان</li>
+                        <li>خانواده</li>
+                        <li>عمومی</li>
+                        <li>هیئتی</li>
+                    </ul>
+                    
+                    <h4>۲. بر اساس مناسبت</h4>
+                    <ul class="structure-list">
+                        <li>محرم</li>
+                        <li>فاطمیه</li>
+                        <li>رمضان</li>
+                        <li>اعتکاف</li>
+                        <li>اربعین</li>
+                        <li>مناسبت آزاد</li>
+                    </ul>
+                    
+                    <h4>۳. بر اساس قالب</h4>
+                    <ul class="structure-list">
+                        <li>فیش منبر</li>
+                        <li>سناریوی جلسه</li>
+                        <li>حلقه معرفت</li>
+                        <li>محتوای ۵ دقیقه‌ای</li>
+                        <li>پکیج تبلیغی</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- فیلدهای ثابت -->
+            <div class="structure-box">
+                <h3 class="structure-title">د) فیلدهای ثابت هر محتوا (ACF)</h3>
+                <ul class="structure-list">
+                    <li>مخاطب (انتخاب از لیست)</li>
+                    <li>زمان اجرا (دقیقه)</li>
+                    <li>مناسبت (انتخاب از taxonomy)</li>
+                    <li>ایده محوری (متن کوتاه)</li>
+                    <li>پیشنهاد تعاملی (متن بلند)</li>
+                    <li>سطح مبلغ (تازه‌کار / حرفه‌ای)</li>
+                    <li>کلیدواژه‌ها (تگ‌ها)</li>
+                    <li>فایل پیوست (PDF / Word)</li>
+                    <li>پیش‌نمایش محتوا (ویدئو/صوت)</li>
+                </ul>
+            </div>
+            
+            <!-- افزونه‌ها -->
+            <div class="plugin-promo">
+                <h3>ج) افزونه‌های پیشنهادی (کاربردی و سبک)</h3>
+            </div>
+            
+            <div class="plugins-grid">
+                <div class="plugin-card">
+                    <div class="plugin-name">Rank Math</div>
+                    <p>بهینه‌سازی سایت برای موتورهای جستجو (سئو)</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <div class="plugin-name">ACF (Advanced Custom Fields)</div>
+                    <p>ساخت فیلدهای سفارشی برای هر محتوا</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <div class="plugin-name">Search & Filter</div>
+                    <p>جستجوی پیشرفته در محتوای سایت</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <div class="plugin-name">WP Rocket / LiteSpeed Cache</div>
+                    <p>افزایش سرعت بارگذاری سایت</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <div class="plugin-name">User Role Editor</div>
+                    <p>تعریف نقش‌های کاربری (مبلغ / مدیر محتوا)</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <div class="plugin-name">Elementor</div>
+                    <p>طراحی صفحات با ویرایشگر بصری</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- دسته‌بندی‌های محتوایی -->
+        <section id="categories" class="categories-section">
+            <h2 class="section-title">دسته‌بندی محتوای تبلیغی</h2>
+            
+            <div class="categories-grid">
+                <!-- ردیف اول -->
+                <div class="step-card">
+                    <div class="step-title">خانواده</div>
+                    <p>محتوای ویژه مسائل خانواده، همسرداری و تربیت فرزند</p>
+                    <div class="step-options">
+                        <div class="step-option">همسرداری</div>
+                        <div class="step-option">تربیت فرزند</div>
+                        <div class="step-option">حقوق خانواده</div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">اهل بیت (ع)</div>
+                    <p>سخنان، سیره و زندگی‌نامه اهل بیت عصمت و طهارت</p>
+                    <div class="step-options">
+                        <div class="step-option">امام شناسی</div>
+                        <div class="step-option">سیره معصومین</div>
+                        <div class="step-option">فضایل اهل بیت</div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">کودک و نوجوان</div>
+                    <p>محتوای جذاب و مناسب برای سنین پایین</p>
+                    <div class="step-options">
+                        <div class="step-option">داستان‌های قرآنی</div>
+                        <div class="step-option">آموزش احکام</div>
+                        <div class="step-option">اخلاق نوجوانی</div>
+                    </div>
+                </div>
+                
+                <!-- ردیف دوم -->
+                <div class="step-card">
+                    <div class="step-title">عمومی</div>
+                    <p>موضوعات عمومی دینی، اخلاقی و پاسخ به شبهات</p>
+                    <div class="step-options">
+                        <div class="step-option">اخلاق اسلامی</div>
+                        <div class="step-option">پاسخ به شبهات</div>
+                        <div class="step-option">معارف دینی</div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">فعالیت‌های تخصصی</div>
+                    <p>محتوای ویژه حلقه‌های معرفت، اعتکاف و اردوها</p>
+                    <div class="step-options">
+                        <div class="step-option">حلقه معرفت</div>
+                        <div class="step-option">برنامه اعتکاف</div>
+                        <div class="step-option">اردوی تربیتی</div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-title">مناسبت‌ها</div>
+                    <p>محتوای مناسبتی برای ایام خاص مذهبی</p>
+                    <div class="step-options">
+                        <div class="step-option">محرم</div>
+                        <div class="step-option">رمضان</div>
+                        <div class="step-option">فاطمیه</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- فوتر -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="bi bi-journal-bookmark-fill"></i> دستیار مبلغ
+            </div>
+            <p class="footer-text">
+                این پلتفرم به منظور تسهیل دسترسی مبلغین به محتوای تبلیغی مناسب و با کیفیت طراحی شده است. 
+                محتوای ارائه‌شده در حوزه‌های مختلف خانواده، اهل بیت، کودک و نوجوان، عمومی و فعالیت‌های تخصصی 
+                مانند حلقه‌های معرفت، اعتکاف و... در اختیار مبلغین محترم قرار گرفته است.
+            </p>
+            
+            <div class="footer-tagline">
+                تولید شده توسط مبلغین رشته تخصصی تبلیغ
+            </div>
+            
+            <div class="copyright">
+                © کلیه حقوق این وب‌سایت متعلق به مجموعه دستیار مبلغ می‌باشد. | طراحی شده با هدف خدمت‌رسانی به جامعه مبلغین
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // داده‌های پیشنهادات منبر بر اساس انتخاب کاربر
+        const sermonData = {
+            child: {
+                '5': {
+                    heyat: {
+                        title: 'قصه‌های قشنگ خدا',
+                        idea: 'خدا دوست داره بچه‌های خوب قصه‌هاش رو بشنون',
+                        points: ['خدا برای بچه‌ها قصه داره', 'پیامبرها دوست بچه‌ها بودن', 'قصه‌ها ما رو خوب می‌کنن'],
+                        conclusion: 'امشب برو با مامان از خدا یه قصه بخواه'
+                    }
+                }
+            },
+            teen: {
+                '10': {
+                    mosque: {
+                        title: 'خدا حوصله‌ات را دارد',
+                        idea: 'خدا از سوال‌های نوجوان نمی‌ترسد',
+                        points: ['سوال داشتن، بی‌دینی نیست', 'خدا اهل گفت‌وگوست', 'مسجد جای امن پرسیدن است'],
+                        conclusion: 'خدا تو را با تردیدهایت دوست دارد'
+                    }
+                }
+            },
+            family: {
+                '20': {
+                    family: {
+                        title: 'خانه؛ کوچک‌ترین بهشت',
+                        idea: 'خانواده موفق، خانواده‌ای است که با هم رشد می‌کنند',
+                        points: ['خانواده مدرسه اولیه ایمان است', 'محبت در خانواده معجزه می‌کند', 'صحبت کردن درمان بسیاری از مشکلات است'],
+                        conclusion: 'امشب دور هم بنشینید و فقط حرف بزنید'
+                    }
+                }
+            },
+            general: {
+                '10': {
+                    mosque: {
+                        title: 'خسته‌ام از خوب نبودنم',
+                        idea: 'خدا با آدم‌های خسته شروع می‌کند، نه با آدم‌های کامل',
+                        points: ['مشکل ما بد بودن نیست، ناامید شدنه', 'خدا دنبال بهانه برای بخششه', 'زمین خوردن پایان راه نیست'],
+                        conclusion: 'خدا هنوز از تو ناامید نشده'
+                    }
+                }
+            }
+        };
+
+        // مدیریت انتخاب‌ها در بخش "امشب چی بگم؟"
+        document.addEventListener('DOMContentLoaded', function() {
+            const stepOptions = document.querySelectorAll('.step-option');
+            const generateBtn = document.getElementById('generate-sermon');
+            const outputSection = document.getElementById('tonight-output');
+            const downloadBtn = document.getElementById('download-sermon');
+            
+            let selectedOptions = {
+                audience: null,
+                time: null,
+                place: null
+            };
+            
+            // رویداد کلیک روی گزینه‌ها
+            stepOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const step = this.dataset.step;
+                    const value = this.dataset.value;
+                    
+                    // حذف انتخاب قبلی از همان مرحله
+                    document.querySelectorAll(`[data-step="${step}"]`).forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // انتخاب گزینه جدید
+                    this.classList.add('active');
+                    selectedOptions[step] = value;
+                    
+                    // فعال کردن دکمه تولید در صورت کامل شدن انتخاب‌ها
+                    if (selectedOptions.audience && selectedOptions.time && selectedOptions.place) {
+                        generateBtn.disabled = false;
+                        generateBtn.style.opacity = '1';
+                    }
+                });
+            });
+            
+            // تولید پیشنهاد منبر
+            generateBtn.addEventListener('click', function() {
+                if (!selectedOptions.audience || !selectedOptions.time || !selectedOptions.place) {
+                    alert('لطفا همه مراحل را تکمیل کنید');
+                    return;
+                }
+                
+                // نمایش بخش خروجی
+                outputSection.style.display = 'block';
+                
+                // به‌روزرسانی تگ‌ها
+                document.getElementById('output-audience').textContent = getAudienceLabel(selectedOptions.audience);
+                document.getElementById('output-time').textContent = `${selectedOptions.time} دقیقه`;
+                document.getElementById('output-place').textContent = getPlaceLabel(selectedOptions.place);
+                
+                // یافتن پیشنهاد مناسب از داده‌ها
+                let suggestion = null;
+                
+                if (sermonData[selectedOptions.audience] && 
+                    sermonData[selectedOptions.audience][selectedOptions.time] &&
+                    sermonData[selectedOptions.audience][selectedOptions.time][selectedOptions.place]) {
+                    
+                    suggestion = sermonData[selectedOptions.audience][selectedOptions.time][selectedOptions.place];
+                } else {
+                    // در صورت عدم وجود، پیشنهاد پیش‌فرض نمایش داده می‌شود
+                    suggestion = {
+                        title: 'رحمت خدا از همه نزدیک‌تر است',
+                        idea: 'خداوند به بندگانش از مادر به فرزندش مهربان‌تر است',
+                        points: ['خدا قبل از اینکه بخواهی، می‌بخشد', 'توبه دروازه رحمت است', 'امید، عبادت است'],
+                        conclusion: 'امشب فقط یک آه صادقانه بکش، کافی است'
+                    };
+                }
+                
+                // به‌روزرسانی محتوای پیشنهاد
+                document.getElementById('output-title').textContent = suggestion.title;
+                document.getElementById('output-idea').textContent = suggestion.idea;
+                
+                const pointsList = document.getElementById('output-points');
+                pointsList.innerHTML = '';
+                suggestion.points.forEach(point => {
+                    const li = document.createElement('li');
+                    li.textContent = point;
+                    pointsList.appendChild(li);
+                });
+                
+                document.getElementById('output-conclusion').textContent = suggestion.conclusion;
+                
+                // اسکرول به بخش خروجی
+                outputSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+            
+            // دانلود فیش منبر
+            downloadBtn.addEventListener('click', function() {
+                alert('فیش منبر با موفقیت دانلود شد. فرمت Word آماده استفاده است.');
+                // در حالت واقعی، اینجا درخواست به سرور برای دانلود فایل ارسال می‌شود
+            });
+            
+            // توابع کمکی برای تبدیل مقادیر به برچسب
+            function getAudienceLabel(value) {
+                const labels = {
+                    'child': 'کودک',
+                    'teen': 'نوجوان',
+                    'family': 'خانواده',
+                    'general': 'عمومی'
+                };
+                return labels[value] || value;
+            }
+            
+            function getPlaceLabel(value) {
+                const labels = {
+                    'heyat': 'هیئت',
+                    'mosque': 'مسجد',
+                    'school': 'مدرسه',
+                    'ektefaf': 'اعتکاف',
+                    'family': 'جلسه خانوادگی'
+                };
+                return labels[value] || value;
+            }
+            
+            // مدیریت منوی ناوبری
+            const navLinks = document.querySelectorAll('.nav-item a');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        // حذف کلاس active از همه لینک‌ها
+                        navLinks.forEach(item => item.classList.remove('active'));
+                        
+                        // اضافه کردن کلاس active به لینک کلیک شده
+                        this.classList.add('active');
+                        
+                        // اسکرول به بخش مربوطه
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
